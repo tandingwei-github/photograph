@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>[[${session.userNick}]]的个人主页</title>
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+
+    <script th:src="@{/resources/layui/layui.js}"></script>
+    <link th:href="@{/resources/layui/css/layui.css}" rel="stylesheet"/>
+
+    <script th:src="@{/resources/users/js/users.js}"></script>
+    <script th:src="@{/resources/users/js/jquery.timers-1.2.js}"></script>
+    <link th:href="@{/resources/users/css/users.css}" rel="stylesheet">
+    <script th:src="@{/resources/users/js/userGetMessage.js}"></script>
+
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div class="layui-header" th:replace="~{users/userInfo::top}"></div>
+    <div class="layui-side layui-bg-black" th:replace="~{users/userInfo::left}"></div>
+
+    <div class="layui-body" style="padding: 20px;">
+        <div class="layui-row layui-col-space15"></div>
+        <div class="layui-progress layui-progress-big"
+             lay-showpercent="true" lay-filter="demo">
+            <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+        </div>
+
+        <div class="site-demo-button" style="display:none">
+            <button class="layui-btn site-demo-active"
+                    data-type="loading" id="progressBtn"></button>
+        </div>
+
+        <h3 id="noMoreLoad" style="display: none">全部系统消息加载完成</h3>
+        <div class="toTop">返回顶部</div>
+    </div>
+
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">© tdw.photograph.com - 欢迎登录图片网</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+.useless, .useless:hover {
+    color: white !important;
+    background-color: #555555 !important;
+}
+
+.break {
+    word-break: break-all;
+}
+
+td, th {
+    text-align: left;
+    display: table-cell;
+    font-size: 15px;
+    vertical-align: center;
+}

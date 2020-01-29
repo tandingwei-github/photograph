@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdw.photograph.mapper.AdminMapper">
+
+    <resultMap id="BaseResultMapAdmin" type="com.tdw.photograph.bean.Admin">
+        <id column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="last_logout" jdbcType="TIMESTAMP" property="lastLogout"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapMessage" type="com.tdw.photograph.bean.Message">
+        <id column="message_id" jdbcType="INTEGER" property="messageId"/>
+        <result column="message_time" jdbcType="TIMESTAMP" property="messageTime"/>
+        <result column="message_title" jdbcType="VARCHAR" property="messageTitle"/>
+        <result column="message_content" jdbcType="VARCHAR" property="messageContent"/>
+        <result column="message_writer" jdbcType="VARCHAR" property="messageWriter"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapUser" type="com.tdw.photograph.bean.User">
+        <id column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="user_phone" jdbcType="CHAR" property="userPhone"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="user_nick" jdbcType="VARCHAR" property="userNick"/>
+        <result column="user_is_stopped" jdbcType="VARCHAR" property="userIsStopped"/>
+        <result column="user_last_login" jdbcType="TIMESTAMP" property="userLastLogin"/>
+        <result column="user_shared" jdbcType="INTEGER" property="userShared"/>
+        <result column="user_purchased" jdbcType="INTEGER" property="userPurchased"/>
+        <result column="user_commented" jdbcType="INTEGER" property="userCommented"/>
+        <result column="user_logo" jdbcType="VARCHAR" property="userLogo"/>
+    </resultMap>
+    <!--管理员登录-->
+    <select id="login" resultMap="BaseResultMapAdmin">
+        select * from admin_list
+        where username = #{username,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
+    </select>
+
+    <!--管理员最后下线时间-->
+    <update id="updateAdminLogoutTime">
+        update admin_list
+        set last_logout = #{LastLogout,jdbcType=TIMESTAMP}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+
+    <!--管理员推送信息-->
+    <insert id="pushMessage">
+        insert into message_list
+        (message_time,message_title,message_content,message_writer)
+        value(#{message_time    ,jdbcType=TIMESTAMP},
+        #{message_title   ,jdbcType=VARCHAR},
+        #{message_content ,jdbcType=VARCHAR},
+        #{message_writer  ,jdbcType=VARCHAR})
+    </insert>
+
+    <!--页面加载完成后，显示前10条信息-->
+    <select id="firstTenMessage" resultMap="BaseResultMapMessage">
+        select * from message_list
+        order by message_id desc limit 10
+    </select>
+
+    <!--往下滚动，加载下一个10条信息-->
+    <select id="moreTenMessage" resultMap="BaseResultMapMessage">
+        select * from message_list
+        order by message_id desc
+        limit #{pageA,jdbcType=INTEGER},#{pageB,jdbcType=INTEGER}
+    </select>
+
+    <!--管理员搜索用户-->
+    <select id="toSearchUser" resultMap="BaseResultMapUser">
+        SELECT * FROM users_list
+        WHERE username
+        like CONCAT('%',#{username,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!--管理员封禁账号-->
+    <update id="toStopUser">
+        update users_list
+        set user_is_stopped = 'yes'
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+
+    <!--管理员解禁账号-->
+    <update id="toBeginUser">
+        update users_list
+        set user_is_stopped = 'no'
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

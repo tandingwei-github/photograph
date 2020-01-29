@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>[[${session.userNick}]]的个人主页</title>
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+
+    <script th:src="@{/resources/layui/layui.js}"></script>
+    <link th:href="@{/resources/layui/css/layui.css}" rel="stylesheet"/>
+
+    <script th:src="@{/resources/users/js/users.js}"></script>
+    <link th:href="@{/resources/users/css/users.css}" rel="stylesheet">
+
+    <link th:href="@{/resources/users/css/userShared.css}" rel="stylesheet">
+    <script th:src="@{/resources/users/js/userShared.js}"></script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div class="layui-header" th:replace="~{users/userInfo::top}"></div>
+    <div class="layui-side layui-bg-black" th:replace="~{users/userInfo::left}"></div>
+
+    <div class="layui-body">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">草稿箱</li>
+                <li>待审核</li>
+                <li>未通过</li>
+                <li>已通过</li>
+                <li>被下架</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">默认宽度是相对于父元素100%适应的，你也可以固定宽度。</div>
+                <div class="layui-tab-item">2</div>
+                <div class="layui-tab-item">3</div>
+                <div class="layui-tab-item">4</div>
+                <div class="layui-tab-item">5</div>
+                <div class="layui-tab-item">6</div>
+            </div>
+        </div>
+
+        <div class="toTop">返回顶部</div>
+    </div>
+    <!-- 底部固定区域 -->
+    <div class="layui-footer">© tdw.photograph.com - 欢迎登录图片网</div>
+</div>
+</body>
+</html>

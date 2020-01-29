@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdw.photograph.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.tdw.photograph.bean.User">
+        <id column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="user_phone" jdbcType="CHAR" property="userPhone"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="user_nick" jdbcType="VARCHAR" property="userNick"/>
+        <result column="user_is_stopped" jdbcType="VARCHAR" property="userIsStopped"/>
+        <result column="user_last_login" jdbcType="TIMESTAMP" property="userLastLogin"/>
+        <result column="user_shared" jdbcType="INTEGER" property="userShared"/>
+        <result column="user_purchased" jdbcType="INTEGER" property="userPurchased"/>
+        <result column="user_commented" jdbcType="INTEGER" property="userCommented"/>
+        <result column="user_logo" jdbcType="VARCHAR" property="userLogo"/>
+    </resultMap>
+
+    <!--用户登录-->
+    <select id="login" resultMap="BaseResultMap">
+        select *
+        from users_list
+        where username = #{username,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
+    </select>
+    <!--用户最后登录时间-->
+    <update id="updateLoginTime">
+        update users_list
+        set user_last_login = #{userLastLogin,jdbcType=TIMESTAMP}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <!--用户修改昵称-->
+    <update id="updateNickname">
+        update users_list
+        set user_nick = #{newNickname,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <!--用户修改密码-->
+    <update id="updatePassword">
+        update users_list
+        set password = #{newPassword,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <!--用户修改头像-->
+    <update id="updateLogo">
+        update users_list
+        set user_logo = #{logoLocation,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <!--用户注册-->
+    <insert id="register">
+        insert into users_list(username,password,user_nick,user_last_login)
+        value(#{username,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR},
+        #{date,jdbcType=TIMESTAMP})
+    </insert>
+    <!--查询账号是否已被注册-->
+    <select id="isRegistered" resultMap="BaseResultMap">
+        select * from users_list
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <!--用户绑定手机号-->
+    <update id="updatePhone">
+        UPDATE users_list
+        set user_phone = #{userPhone,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <!--查询该号码是否已被绑定-->
+    <select id="getPhone" resultMap="BaseResultMap">
+        select * from users_list
+        where user_phone = #{phone,jdbcType=VARCHAR}
+    </select>
+</mapper>

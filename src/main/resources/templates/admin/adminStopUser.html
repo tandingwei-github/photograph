@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>后台-标注版权-图片网</title>
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <link rel="stylesheet" th:href="@{/resources/admin/css/bootstrap.css}"/>
+    <script th:src="@{/resources/admin/js/bootstrap.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/resources/admin/css/admin.css}"/>
+    <script th:src="@{/resources/admin/js/admin.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/resources/admin/css/adminStopUser.css}">
+    <script th:src="@{/resources/admin/js/adminStopUser.js}"></script>
+
+</head>
+
+<body>
+<div class="father">
+    <div class="left" th:fragment="left">
+        <div class="bigTitle">图片网后台管理系统</div>
+        <div>
+            <ul class="lines">
+                <li class="left1">
+                    <a th:href="@{/adminStopUser}" class="list" id="list1">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img1"/>
+                        封禁账号</a>
+                </li>
+                <li class="left2">
+                    <a th:href="@{/adminCheckPhoto}" class="list" id="list2">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img2">
+                        审核图片</a>
+                </li>
+                <li class="left3">
+                    <a th:href="@{/adminStopPhoto}" class="list" id="list3">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img3">
+                        下架图片</a>
+                </li>
+                <li class="left4">
+                    <a th:href="@{/adminDeleteComment}" class="list" id="list4">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img4">
+                        删除评论</a>
+                </li>
+                <li class="left5">
+                    <a th:href="@{/adminTagCopyright}" class="list" id="list5">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img5">
+                        标注版权</a>
+                </li>
+                <li class="left6">
+                    <a th:href="@{/adminPushMessage}" class="list" id="list6">
+                        <img th:src="@{/static/favicon.ico}"
+                             style="height: 89px;float: left" id="img6">
+                        推送信息</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="right">
+        <div class="thisUser" th:fragment="thisUser">
+            <div class="rightTop">当前在线 : [[${session.userNick}]]</div>
+            <div class="rightTop">登录时间 : [[${session.loginTime}]]</div>
+            <div class="rightTop"><a th:href="logoutAdmin">退出后台</a></div>
+        </div>
+        <hr/>
+        <!--
+        属性 aria-hidden="true" 用于保持模态窗口不可见，直到触发器被触发为止（比如点击在相关的按钮上）。
+        aria-labelledby="myModalLabel"，该属性引用模态框的标题。
+        data-backdrop 指定一个静态的背景，当用户点击模态框外部时不会关闭模态框。
+        data-keyboard	当按下 escape 键时关闭模态框，设置为 false 时则按键无效。
+        -->
+        <div class="content">
+            <div class="modal fade"
+                 id="myModal"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true"
+                 data-backdrop="false"
+                 data-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal"
+                                    aria-hidden="true">×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                你确定要封禁这些账号吗？
+                            </h4>
+                        </div>
+                        <div class="modal-body" id="usernameToStop"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">否，取消
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal" onclick="toStopUser()">是，确认
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr style="text-align: center">
+                    <th colspan="1">
+                        <input type="checkbox" id="checkAll" onclick="selectAll()"/>
+                        <span>全选</span>
+                    </th>
+                    <th colspan="1">
+                        <input type="button"
+                               value="封禁"
+                               class="btn btn-warning"
+                               data-toggle="modal"
+                               data-target="#myModal"
+                               onclick="alertUsername()">
+                    </th>
+                    <th colspan="1">
+                        <input type="button"
+                               value="解禁"
+                               class="btn btn-success"
+                               onclick="toBeginUsername()">
+                    </th>
+                    <th colspan="2">
+                        <input type="text" placeholder="输入账号"
+                               id="username" style=" width: 70%">
+                        <input type="button" class="btn btn-info"
+                               value="搜索账号" onclick="searchUser()">
+                    </th>
+
+                </tr>
+                <tr style="background-color: #efefef">
+                    <th width="15%">选中</th>
+                    <th width="15%">账号ID</th>
+                    <th width="20%">账号昵称</th>
+                    <th width="35%">最后上线时间</th>
+                    <th width="15%">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="toTop">返回顶部</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

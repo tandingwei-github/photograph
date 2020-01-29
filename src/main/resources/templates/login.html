@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录-图片网</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link th:rel="stylesheet" th:href="@{/resources/login/css/font.css}">
+    <link th:rel="stylesheet" th:href="@{/resources/login/css/style.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <script th:src="@{/resources/login/js/login.js}"></script>
+</head>
+
+<body>
+<h1>欢迎登录-图片网</h1>
+<div class="log">
+    <div class="content1">
+        <h2>登录</h2>
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+
+        <form th:action="@{/toLogin}" method="post">
+            <input type="text" th:name="username" th:class="username"
+                   placeholder="请输入账号/手机号">
+            <input type="password" th:name="password" th:class="password"
+                   placeholder="请输入密码">
+            <div class="button-row">
+                <input type="submit" class="sign-in" value="马上登录">
+                <input type="reset" class="reset" value="重置输入">
+            </div>
+        </form>
+
+        <br/><br/>
+        <hr/>
+        没有账号？
+        <a th:href="@{/register}" style="font-size: 30px;">立即注册</a>
+
+        <br/>
+        <hr/>
+
+        <div class="otherWayToLogin">
+            第三方登录
+            <button>
+                <img th:src="@{/resources/login/images/QQ.png}" style="width: 40px">
+            </button>
+            <button>
+                <img th:src="@{/resources/login/images/Wechat.png}" style="width: 40px">
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

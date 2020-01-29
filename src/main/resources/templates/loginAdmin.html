@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>图片网-后台登录页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:rel="stylesheet" th:href="@{/resources/login/css/font.css}">
+    <link th:rel="stylesheet" th:href="@{/resources/login/css/style.css}"/>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <script th:src="@{/resources/login/js/login.js}"></script>
+</head>
+
+<body>
+<h1>图片网-后台管理员登录页面</h1>
+<div class="log">
+    <div class="content1">
+        <h2>登录</h2>
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+
+        <form th:action="@{/toLoginAdmin}" method="post" id="la">
+            <input type="text" th:name="username" th:class="username"
+                   placeholder="请输入账号" value="1">
+            <input type="password" th:name="password" th:class="password"
+                   placeholder="请输入密码" value="1">
+            <div class="button-row">
+                <input type="submit" class="sign-in" value="登录">
+                <input type="reset" class="reset" value="重置">
+            </div>
+        </form>
+
+        <br/><br/>
+        <hr/>
+        <a th:href="@{/login}" style="font-size: 30px;">用户登录</a>
+    </div>
+</div>
+</body>
+</html>

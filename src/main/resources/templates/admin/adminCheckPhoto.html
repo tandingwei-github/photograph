@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>后台-审核图片-图片网</title>
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/resources/admin/css/bootstrap.css}"/>
+
+    <link rel="stylesheet" th:href="@{/resources/admin/css/admin.css}"/>
+    <script th:src="@{/resources/admin/js/admin.js}"></script>
+
+</head>
+
+<body>
+<div class="father">
+    <div th:replace="~{admin/adminStopUser::left}"></div>
+    <div class="right">
+        <div th:replace="~{admin/adminStopUser::thisUser}"></div>
+        <hr/>
+        <div class="content">
+            欢迎来到图片网-后台管理系统-审核图片
+            <div class="toTop">返回顶部</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
